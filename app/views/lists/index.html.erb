@@ -1,0 +1,9 @@
+<h1>COUCOU</h1>
+
+<ul>
+<% @lists.each do |list| %>
+  <%= link_to list_path(list) do  %>
+    <li><%= list.name %></li>
+  <% end %>
+<% end %>
+</ul>

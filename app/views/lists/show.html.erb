@@ -1,0 +1,27 @@
+<h1>List <%=@list.name %></h1>
+
+<%= link_to "Créer une nouvelle list", new_list_path, class: "btn btn-info"  %>
+<%= link_to "Ajouter un nouveau signet", new_list_bookmark_path(@list), class: "btn btn-primary" %>
+<br><br>
+<% @list.movies.each do |movie| %>
+</div class= "container" my-2>
+  <div class="row">
+    <div class = "h3">
+      Title: <%= movie.title %>
+    </div>
+    <div>
+      Overview: <%= movie.overview %>
+    </div>
+    <div>
+      <img src="<%= movie.poster_url  %>" alt="" class= "w-30">
+    </div>
+    <div class= "h4">
+      Rating: <%= movie.rating %>
+    </div>
+  </div>
+<div>
+<%= link_to "remove this movie from the list", bookmark_path(Bookmark.find_by(movie: movie, list: @list)), data: {
+                      turbo_method: :delete,
+                      turbo_confirm: 'Oui vraiment? 🥲'
+                    }  %>
+<% end %>
