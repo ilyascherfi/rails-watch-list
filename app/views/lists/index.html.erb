@@ -1,9 +1,25 @@
-<h1>COUCOU</h1>
+<h1 class= "text-center">My lists</h1>
 
-<ul>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80);">
+  <div class="container">
+    <p class= "text-center text-white " >Save any kind of movie</p>
+    <p class= "text-center text-white "><%= @lists.name %></p>
+  </div>
+</div>
+
+
+
+
+
 <% @lists.each do |list| %>
   <%= link_to list_path(list) do  %>
-    <li><%= list.name %></li>
+
+    <div class="card-product my-3">
+      <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/skateboard.jpg" />
+      <div class="card-product-infos">
+        <h2><%= list.name %></h2>
+        <p>Product description with <strong>relevant info</strong> only.</p>
+      </div>
+    </div>
   <% end %>
 <% end %>
-</ul>

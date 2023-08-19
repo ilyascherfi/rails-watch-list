@@ -1,28 +1,71 @@
-<h1>List <%=@list.name %></h1>
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+  <div class="container-fluid">
+    <%= link_to "#", class: "navbar-brand" do %>
+      <%= image_tag "coeur.jpg", class: "rounded" %>
+    <% end %>
 
-<%= link_to "Créer une nouvelle list", new_list_path, class: "btn btn-info"  %>
-<%= link_to "Ajouter un nouveau signet", new_list_bookmark_path(@list), class: "btn btn-primary" %>
-<%= link_to "My lists", root_path, class: "btn btn-primary" %>
-<br><br>
-<% @list.movies.each do |movie| %>
-</div class= "container" my-2>
-  <div class="row">
-    <div class = "h3">
-      Title: <%= movie.title %>
-    </div>
-    <div>
-      Overview: <%= movie.overview %>
-    </div>
-    <div>
-      <img src="<%= movie.poster_url  %>" alt="" class= "w-30">
-    </div>
-    <div class= "h4">
-      Rating: <%= movie.rating %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+        <%# if user_signed_in? %>
+          <li class="nav-item active">
+            <%= link_to "Créer une nouvelle list", new_list_path, class: "nav-link"  %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "My lists", root_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Ajouter un nouveau signet", new_list_bookmark_path(@list), class: "nav-link" %>
+          </li>
+      </ul>
     </div>
   </div>
+</div>
+
+
+
+
+
+
 <div>
-<%= link_to "remove this movie from the list", bookmark_path(Bookmark.find_by(movie: movie, list: @list)), data: {
+  <% @list.photos.each do |photo| %>
+    <% if photo.attached? %>
+      <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
+    <% end %>
+  <% end %>
+</div>
+
+
+
+
+
+<br><br>
+
+
+<div class="container ">
+    <div class=" row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+      <%  @list.movies.each do|movie|%>
+        <div class="col">
+          <div class="card rounded-4 p-3 mt-3" >
+            <div class="card-img-top ">
+              <div class="card-trip-infos">
+                <img src="<%= movie.poster_url  %>"  class="card-img-top rounded-4" alt="">
+                <div>
+                  <h2 class="card card-textcard-text text-center rounded-3 mt-3"> <%= movie.title %></h2>
+                  <p class="fw-light text-wrap mt-3"><%= movie.overview  %></p>
+                  <p class="card card-textcard-text text-center rounded-3 mt-3"> Rating : <%=  movie.rating %></p>
+                  <%= link_to "remove this movie from the list", bookmark_path(Bookmark.find_by(movie: movie, list: @list)), data: {
                       turbo_method: :delete,
                       turbo_confirm: 'Oui vraiment? 🥲'
                     }  %>
-<% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
