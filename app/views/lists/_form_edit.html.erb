@@ -1,0 +1,7 @@
+
+<%= simple_form_for @list do |f| %>
+  <%= f.input :name %>
+  <%= f.input :photo %>
+  <%= f.button :submit, "Editer la list!", class: "btn btn-primary" %>
+  <%= link_to "retour", root_path, class: "btn btn-dark"  %>
+<% end %>

@@ -1,7 +1,8 @@
+<%# nav barre  %>
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to "#", class: "navbar-brand" do %>
-      <%= image_tag "coeur.jpg", class: "rounded" %>
+      <%= cl_image_tag @list.photo.key, class: "rounded" %>
     <% end %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,46 +27,51 @@
 </div>
 
 
-
-
-
-
-<div>
-  <% @list.photos.each do |photo| %>
-    <% if photo.attached? %>
-      <%= cl_image_tag photo.key, height: 300, width: 400, crop: :fill %>
-    <% end %>
-  <% end %>
+<%# affichage de la banner  %>
+<div class="banner position-relative" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= cl_image_path @list.photo.key, height: 300, crop: :fill %>);">
+  <div class="container">
+    <h2 class="text-center text-white">Vous êtes sur la list <strong><%= @list.name %></strong></h2>
+  </div>
+  <div class= "movies-count p-3 bg-warning text-white rounded">
+    Movies: <%= @list.movies.count %>
+  </div>
 </div>
-
-
 
 
 
 <br><br>
 
+<div>
+  <%= link_to "Ajouter un film à cette list", new_list_bookmark_path(@list), class: "btn btn-secondary"%>
+</div>
 
-<div class="container ">
-    <div class=" row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+
+<div class="container">
+  <div class= "card-trip">
+    <div class="cards">
       <%  @list.movies.each do|movie|%>
-        <div class="col">
-          <div class="card rounded-4 p-3 mt-3" >
-            <div class="card-img-top ">
-              <div class="card-trip-infos">
-                <img src="<%= movie.poster_url  %>"  class="card-img-top rounded-4" alt="">
-                <div>
-                  <h2 class="card card-textcard-text text-center rounded-3 mt-3"> <%= movie.title %></h2>
-                  <p class="fw-light text-wrap mt-3"><%= movie.overview  %></p>
-                  <p class="card card-textcard-text text-center rounded-3 mt-3"> Rating : <%=  movie.rating %></p>
-                  <%= link_to "remove this movie from the list", bookmark_path(Bookmark.find_by(movie: movie, list: @list)), data: {
+        <div class="card-trip">
+          <img src="<%= movie.poster_url  %>",   />
+          <div class="card-trip-infos">
+            <div>
+              <h2><%= movie.title %> : <span class="text-secondary"><%=  movie.rating %>/10 </span></h2>
+              <p><%= movie.overview  %></p>
+            </div>
+          </div>
+          <div class= "card-trip-infos d-flex">
+            <% bookmark = Bookmark.find_by(movie: movie, list: @list) %>
+            <h2 class="text-secondary">"<%= bookmark.comment %>...</h2>
+            <h2 class="text-danger"><%= link_to "delete", bookmark_path(bookmark), data: {
                       turbo_method: :delete,
                       turbo_confirm: 'Oui vraiment? 🥲'
-                    }  %>
-                </div>
-              </div>
-            </div>
+                    }, class: "text-danger"  %></h2>
           </div>
         </div>
       <% end %>
     </div>
   </div>
+</div>
+
+<%# affichage footer %>
+
+<%= render "footer" %>
